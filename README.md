@@ -1,7 +1,7 @@
 <div align="center">
     <img src="./app/src/main/ic_launcher-playstore.png" width="128" height="128" style="display: block; margin: 0 auto"/>
     <h1>ViTune</h1>
-    <p>An Android application for seamless music streaming</p>
+    <p>An Android application for seamless music streaming with NewPipe extractor</p>
 </div>
 
 ---
@@ -32,6 +32,7 @@
 - Listen from your car using Android Auto
 - Open YouTube/YouTube Music links (`watch`, `playlist`, `channel`, etc.) with ViTune
 - Ridiculously lightweight APK
+- NewPipe extractor
 
 ## Installation
 
