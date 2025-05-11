@@ -123,6 +123,7 @@ composeCompiler {
 
 dependencies {
     coreLibraryDesugaring(libs.desugaring)
+    implementation(libs.ktor.client.okhttp)
 
     implementation(projects.compose.persist)
     implementation(projects.compose.preferences)
@@ -176,6 +177,7 @@ dependencies {
     implementation(projects.providers.piped)
     implementation(projects.providers.sponsorblock)
     implementation(projects.providers.translate)
+    implementation(projects.providers.newpipe)
     implementation(projects.core.data)
     implementation(projects.core.ui)
 

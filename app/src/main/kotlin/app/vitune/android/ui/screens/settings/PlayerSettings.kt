@@ -172,6 +172,13 @@ fun PlayerSettings() = with(PlayerPreferences) {
                 valueText = { it.displayName() }
             )
 
+            EnumValueSelectorSettingsEntry(
+                title = stringResource(R.string.extractor),
+                selectedValue = extractor,
+                onValueSelect = { extractor = it },
+                valueText = { it.displayName() }
+            )
+
             SwitchSettingsEntry(
                 title = stringResource(R.string.audio_focus),
                 text = stringResource(R.string.audio_focus_description),

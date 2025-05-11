@@ -1,5 +1,8 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":providers:newpipe")
+
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {

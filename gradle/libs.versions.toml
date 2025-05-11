@@ -5,6 +5,7 @@ ksp = "2.1.20-2.0.1"
 jvm = "23"
 agp = "8.9.2"
 
+newpipeextractor = "0.24.6"
 room = "2.7.1"
 media3 = "1.6.1"
 ktor = "3.1.2"
@@ -12,6 +13,12 @@ detekt = "1.23.8"
 workmanager = "2.10.1"
 credentials = "1.5.0"
 coil = "3.1.0"
+junit = "4.13.2"
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+appcompat = "1.6.1"
+material = "1.10.0"
+annotationJvm = "1.9.1"
 
 [plugins]
 android_application = { id = "com.android.application", version.ref = "agp" }
@@ -47,6 +54,7 @@ compose_lottie = { module = "com.airbnb.android:lottie-compose", version = "6.4.
 coil_compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil" }
 coil_ktor = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil" }
 
+newpipeextractor = { module = "com.github.teamnewpipe:NewPipeExtractor", version.ref = "newpipeextractor" }
 room = { module = "androidx.room:room-ktx", version.ref = "room" }
 room_compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
@@ -85,3 +93,9 @@ desugaring = { module = "com.android.tools:desugar_jdk_libs", version = "2.1.5" 
 
 detekt_compose = { module = "io.nlopez.compose.rules:detekt", version = "0.4.5" }
 detekt_formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }

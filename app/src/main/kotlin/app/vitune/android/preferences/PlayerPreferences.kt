@@ -25,6 +25,8 @@ object PlayerPreferences : GlobalPreferencesHolder() {
     var bassBoostLevel by bassBoostLevelProperty
     val reverbProperty = enum(Reverb.None)
     var reverb by reverbProperty
+    val extractorProperty = enum(Extractor.NewPipe)
+    var extractor by extractorProperty
     val resumePlaybackWhenDeviceConnectedProperty = boolean(false)
     var resumePlaybackWhenDeviceConnected by resumePlaybackWhenDeviceConnectedProperty
     val speedProperty = float(1f)
@@ -116,5 +118,16 @@ object PlayerPreferences : GlobalPreferencesHolder() {
             preset = PresetReverb.PRESET_PLATE,
             displayName = { stringResource(R.string.reverb_plate) }
         )
+    }
+
+    enum class Extractor(
+        val displayName: @Composable () -> String
+    ) {
+        Internal(
+            displayName = { "Internal" }
+        ),
+        NewPipe(
+            displayName = { "NewPipe" }
+        ),
     }
 }

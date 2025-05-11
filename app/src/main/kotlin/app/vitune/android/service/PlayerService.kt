@@ -126,6 +126,7 @@ import app.vitune.providers.innertube.models.bodies.SearchBody
 import app.vitune.providers.innertube.requests.player
 import app.vitune.providers.innertube.requests.searchPage
 import app.vitune.providers.innertube.utils.from
+import app.vitune.providers.newpipe.NewPipeInit
 import app.vitune.providers.sponsorblock.SponsorBlock
 import app.vitune.providers.sponsorblock.models.Action
 import app.vitune.providers.sponsorblock.models.Category
@@ -1372,6 +1373,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                     .withUri(cachedUri.uri)
                     .ranged(cachedUri.meta)
             } ?: run {
+
                 val body = runBlocking(Dispatchers.IO) {
                     Innertube.player(PlayerBody(videoId = mediaId))
                 }?.getOrThrow()
@@ -1379,9 +1381,32 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                 if (body?.videoDetails?.videoId != mediaId) throw VideoIdMismatchException()
 
                 body.reason?.let { Log.w(TAG, it) }
+
                 val format = body.streamingData?.highestQualityFormat
                     ?: throw PlayableFormatNotFoundException()
-                val url = when (val status = body.playabilityStatus?.status) {
+
+                val result = when(PlayerPreferences.extractor) {
+                    PlayerPreferences.Extractor.NewPipe -> {
+                        Log.w(TAG, "using NewPipe to extract audio")
+                        Pair(NewPipeInit.getAudioStreams(mediaId), "OK")
+                    }
+                    PlayerPreferences.Extractor.Internal -> {
+                        Pair(
+                            runCatching {
+                                runBlocking(Dispatchers.IO) {
+                                    body.context?.let { format.findUrl(it) }
+                                }
+                            }.getOrElse {
+                            throw RestrictedVideoException(it)
+                                        },
+                            body.playabilityStatus?.status)
+                    }
+                }
+
+                val url = result.first ?: throw UnplayableException()
+                val status = result.second ?: throw UnplayableException()
+
+                when (status) {
                     "OK" -> {
                         val mediaItem = runCatching {
                             runBlocking(Dispatchers.IO) { findMediaItem(mediaId) }
@@ -1414,14 +1439,6 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                                 )
                             }
                         }
-
-                        runCatching {
-                            runBlocking(Dispatchers.IO) {
-                                body.context?.let { format.findUrl(it) }
-                            }
-                        }.getOrElse {
-                            throw RestrictedVideoException(it)
-                        }
                     }
 
                     "UNPLAYABLE" -> throw UnplayableException()
@@ -1432,7 +1449,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                         /* cause = */ null,
                         /* errorCode = */ PlaybackException.ERROR_CODE_REMOTE_ERROR
                     )
-                } ?: throw UnplayableException()
+                }
 
                 val uri = url.toUri().let {
                     if (body.cpn == null) it
