@@ -11,7 +11,11 @@ object NewPipeInit {
     }
 
     private fun getExtractor(url: String): StreamExtractor {
-        return ServiceList.YouTube.getStreamExtractor(url)
+        val extractor = ServiceList.YouTube.getStreamExtractor(url)
+
+        extractor.fetchPage()
+
+        return extractor
             ?: throw ExtractionException("couldn't get info about audio with NewPipe")
     }
 
