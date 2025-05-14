@@ -67,7 +67,6 @@ import androidx.media3.common.Player
 import androidx.work.Configuration
 import app.vitune.android.preferences.AppearancePreferences
 import app.vitune.android.preferences.DataPreferences
-import app.vitune.android.preferences.PlayerPreferences
 import app.vitune.android.service.PlayerService
 import app.vitune.android.service.ServiceNotifications
 import app.vitune.android.service.downloadState
@@ -114,7 +113,6 @@ import app.vitune.providers.innertube.Innertube
 import app.vitune.providers.innertube.models.bodies.BrowseBody
 import app.vitune.providers.innertube.requests.playlistPage
 import app.vitune.providers.innertube.requests.song
-import app.vitune.providers.newpipe.NewPipeInit
 import coil3.ImageLoader
 import coil3.PlatformContext
 import coil3.SingletonImageLoader
@@ -191,11 +189,6 @@ class MainActivity : ComponentActivity(), MonetColorsChangedListener {
 
         intent?.let { handleIntent(it) }
         addOnNewIntentListener(::handleIntent)
-
-        if (PlayerPreferences.extractor == PlayerPreferences.Extractor.NewPipe) {
-            Log.w(TAG, "init NewPipe extractor")
-            NewPipeInit.init()
-        }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)

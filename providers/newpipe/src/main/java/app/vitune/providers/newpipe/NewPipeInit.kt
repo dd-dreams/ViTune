@@ -6,7 +6,7 @@ import org.schabi.newpipe.extractor.exceptions.ExtractionException
 import org.schabi.newpipe.extractor.stream.StreamInfo
 
 object NewPipeInit {
-    fun init() {
+    init {
         NewPipe.init(DownloaderImpl.init(null))
     }
 
